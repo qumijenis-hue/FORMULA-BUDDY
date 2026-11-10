@@ -1,0 +1,822 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula Buddy 💜</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    color:#30205e;
+    background:linear-gradient(135deg,#f8edff,#e9dcff,#fceaff,#e4e8ff);
+    background-size:300% 300%;
+    animation:bgMove 12s ease infinite;
+    overflow-x:hidden;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+/* Floating Maths */
+
+.math{
+    position:fixed;
+    font-size:35px;
+    font-weight:bold;
+    color:#a87bff;
+    opacity:.4;
+    animation:mathFloat 6s ease-in-out infinite;
+    pointer-events:none;
+}
+
+.math1{top:12%;left:5%}
+.math2{top:20%;right:6%;animation-delay:1s}
+.math3{bottom:15%;left:7%;animation-delay:2s}
+.math4{bottom:20%;right:8%;animation-delay:3s}
+
+@keyframes mathFloat{
+    0%,100%{transform:translateY(0) rotate(-10deg)}
+    50%{transform:translateY(-35px) rotate(15deg)}
+}
+
+/* Sparkles */
+
+.sparkle{
+    position:fixed;
+    color:#ff91d5;
+    font-size:25px;
+    pointer-events:none;
+    animation:sparkle 3s ease-in-out infinite;
+}
+
+@keyframes sparkle{
+    0%,100%{opacity:0;transform:scale(.3) rotate(0)}
+    50%{opacity:1;transform:scale(1.2) rotate(180deg)}
+}
+
+/* Navbar */
+
+.navbar{
+    margin:20px auto;
+    width:90%;
+    max-width:1200px;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(15px);
+    padding:15px 25px;
+    border-radius:50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 8px 30px #9c70d520;
+    animation:navEnter .8s ease;
+}
+
+@keyframes navEnter{
+    from{opacity:0;transform:translateY(-30px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.logo{
+    font-size:24px;
+    font-weight:800;
+    color:#4c25c7;
+}
+
+.logo span{color:#ff9e35}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#57417e;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#9b40ff;
+    transform:translateY(-2px);
+}
+
+/* Main */
+
+.container{
+    max-width:1200px;
+    width:90%;
+    margin:50px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:50px;
+}
+
+/* Hero */
+
+.hero{
+    animation:heroEnter 1s ease;
+}
+
+@keyframes heroEnter{
+    from{opacity:0;transform:translateX(-40px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+.hero h1{
+    font-size:65px;
+    line-height:1.1;
+    color:#34206e;
+}
+
+.hero h1 span{color:#7b36ff}
+
+.hero .tag{
+    display:inline-block;
+    background:#ffe59a;
+    padding:8px 18px;
+    border-radius:30px;
+    margin:20px 0;
+    font-weight:600;
+    animation:tagBounce 3s infinite;
+}
+
+@keyframes tagBounce{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-5px)}
+}
+
+.hero p{
+    font-size:18px;
+    margin:10px 0 20px;
+    color:#67518e;
+}
+
+.features{
+    list-style:none;
+    line-height:2.4;
+    font-weight:500;
+}
+
+.features li{
+    animation:featureAppear .7s backwards;
+}
+
+.features li:nth-child(1){animation-delay:.2s}
+.features li:nth-child(2){animation-delay:.4s}
+.features li:nth-child(3){animation-delay:.6s}
+.features li:nth-child(4){animation-delay:.8s}
+
+.features li::before{content:"💜 "}
+
+@keyframes featureAppear{
+    from{opacity:0;transform:translateX(-25px)}
+    to{opacity:1;transform:translateX(0)}
+}
+
+/* Mascot */
+
+.mascot{
+    margin-top:25px;
+    font-size:95px;
+    display:inline-block;
+    cursor:pointer;
+    animation:mascotBounce 3s infinite;
+}
+
+@keyframes mascotBounce{
+    0%,100%{transform:translateY(0) rotate(0)}
+    25%{transform:translateY(-15px) rotate(-5deg)}
+    75%{transform:translateY(-8px) rotate(5deg)}
+}
+
+/* Login Card */
+
+.card{
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(20px);
+    padding:35px;
+    border-radius:30px;
+    box-shadow:0 20px 60px #8e58d82b;
+    border:2px solid white;
+    animation:cardEntrance 1s cubic-bezier(.2,.8,.2,1);
+    transition:box-shadow .4s;
+}
+
+.card:hover{
+    box-shadow:0 25px 70px #8e58d850;
+}
+
+@keyframes cardEntrance{
+    from{opacity:0;transform:translateY(60px) scale(.9)}
+    to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.card.switching{
+    animation:switchAnimation .4s ease;
+}
+
+@keyframes switchAnimation{
+    0%{opacity:.5;transform:scale(.96)}
+    100%{opacity:1;transform:scale(1)}
+}
+
+/* Tabs */
+
+.tabs{
+    display:flex;
+    background:#f1e8ff;
+    border-radius:20px;
+    padding:5px;
+    margin-bottom:25px;
+}
+
+.tabs button{
+    width:50%;
+    border:none;
+    padding:13px;
+    border-radius:15px;
+    background:transparent;
+    color:#7356a9;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.tabs button.active{
+    background:linear-gradient(135deg,#a34aff,#6736e9);
+    color:white;
+    box-shadow:0 5px 15px #914aff40;
+}
+
+.tabs button:hover{transform:translateY(-2px)}
+
+.card h2{
+    text-align:center;
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    font-size:13px;
+    color:#927bb5;
+    margin-bottom:25px;
+}
+
+/* Inputs */
+
+.input-box{margin-bottom:16px}
+
+.input-box label{
+    display:block;
+    font-size:13px;
+    margin-bottom:7px;
+    color:#5e458c;
+    font-weight:600;
+}
+
+.input-box input{
+    width:100%;
+    padding:15px;
+    border-radius:15px;
+    border:2px solid #eee3ff;
+    background:#faf7ff;
+    outline:none;
+    color:#432a76;
+    font-size:14px;
+    transition:all .3s;
+}
+
+.input-box input:focus{
+    transform:scale(1.02);
+    border-color:#a46aff;
+    background:white;
+    box-shadow:0 0 20px #a46aff45;
+}
+
+.input-box input::placeholder{color:#b4a2d0}
+
+.password-field{position:relative}
+
+.password-field input{padding-right:60px}
+
+.eye{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    border:none;
+    background:none;
+    font-size:18px;
+}
+
+/* Options */
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:12px;
+    margin:15px 0 20px;
+    gap:10px;
+}
+
+.options label{
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+a{
+    color:#8a35f4;
+    text-decoration:none;
+}
+
+/* Button */
+
+.main-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,#a34aff,#6335ec);
+    color:white;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 8px 20px #934aff35;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.main-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px #934aff50;
+}
+
+.main-btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);
+    transform:skewX(-25deg);
+}
+
+.main-btn:hover::before{animation:shine .8s forwards}
+
+@keyframes shine{
+    to{left:150%}
+}
+
+/* Message */
+
+.message{
+    text-align:center;
+    margin-top:15px;
+    font-size:13px;
+    color:#6e39bd;
+}
+
+.bottom{
+    text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    color:#8c76ad;
+}
+
+.bottom a{font-weight:700}
+
+.footer{
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+    color:#9b87ba;
+}
+
+/* Celebration */
+
+.particle{
+    position:fixed;
+    pointer-events:none;
+    z-index:1000;
+    animation:particleFly 1.5s ease-out forwards;
+}
+
+@keyframes particleFly{
+    0%{opacity:1;transform:translate(0,0) scale(1)}
+    100%{opacity:0;transform:translate(var(--x),var(--y)) scale(.2)}
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+    .container{
+        grid-template-columns:1fr;
+        max-width:500px;
+        gap:30px;
+    }
+
+    .hero{text-align:center}
+    .hero h1{font-size:45px}
+    .mascot{font-size:70px}
+    .nav-links{display:none}
+    .card{padding:25px}
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating Maths -->
+
+<div class="math math1">x²</div>
+<div class="math math2">π</div>
+<div class="math math3">√</div>
+<div class="math math4">∑</div>
+
+<!-- Sparkles -->
+
+<div class="sparkle" style="top:15%;left:25%">✦</div>
+<div class="sparkle" style="top:35%;right:20%;animation-delay:1s">✧</div>
+<div class="sparkle" style="bottom:25%;left:35%;animation-delay:2s">♡</div>
+<div class="sparkle" style="top:70%;right:10%;animation-delay:.5s">✨</div>
+<div class="sparkle" style="top:45%;left:10%;animation-delay:1.5s">✦</div>
+
+<!-- Navbar -->
+
+<nav class="navbar">
+    <div class="logo">🎓 Formula <span>Buddy</span></div>
+    <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#">Features</a>
+        <a href="#">About</a>
+    </div>
+</nav>
+
+<!-- Main -->
+
+<div class="container">
+
+    <!-- Left Side -->
+
+    <div class="hero">
+
+        <h1>Formula<br><span>Buddy 💜</span></h1>
+
+        <div class="tag">✨ Learn • Practice • Excel</div>
+
+        <p>Your cute little companion for<br>
+        Maths Formula Learning!</p>
+
+        <ul class="features">
+            <li>Explore Formulas</li>
+            <li>Take Fun Quizzes</li>
+            <li>Track Your Progress</li>
+            <li>Become a Maths Pro!</li>
+        </ul>
+
+        <div class="mascot">🧑🏻‍🎓📚</div>
+
+    </div>
+
+    <!-- Right Side -->
+
+    <div class="card">
+
+        <div class="tabs">
+            <button id="loginTab" class="active"
+            onclick="switchForm('login')">💜 Login</button>
+
+            <button id="signupTab"
+            onclick="switchForm('signup')">✨ Sign Up</button>
+        </div>
+
+        <h2 id="title">Welcome Back! 👋</h2>
+
+        <p class="subtitle" id="subtitle">
+            Let's continue your learning journey
+        </p>
+
+        <form id="authForm">
+
+            <div class="input-box" id="nameBox" style="display:none">
+                <label>Your Name</label>
+                <input type="text" id="name"
+                placeholder="Enter your name">
+            </div>
+
+            <div class="input-box">
+                <label>Email Address</label>
+                <input type="email" id="email"
+                placeholder="hello@example.com" required>
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+
+                <div class="password-field">
+                    <input type="password" id="password"
+                    placeholder="Enter your password" minlength="6" required>
+
+                    <button type="button" class="eye"
+                    onclick="togglePassword('password',this)">👁️</button>
+                </div>
+            </div>
+
+            <div class="input-box" id="confirmBox" style="display:none">
+                <label>Confirm Password</label>
+
+                <div class="password-field">
+                    <input type="password" id="confirmPassword"
+                    placeholder="Confirm your password">
+
+                    <button type="button" class="eye"
+                    onclick="togglePassword('confirmPassword',this)">👁️</button>
+                </div>
+            </div>
+
+            <div class="options" id="loginOptions">
+                <label>
+                    <input type="checkbox"> Remember me
+                </label>
+
+                <a href="#" onclick="forgotPassword(event)">
+                    Forgot password?
+                </a>
+            </div>
+
+            <button type="submit" class="main-btn" id="submitBtn">
+                Login & Continue 🚀
+            </button>
+
+        </form>
+
+        <div class="message" id="message"></div>
+
+        <div class="bottom">
+            <span id="bottomText">New to Formula Buddy?</span>
+            <a href="#" id="bottomLink">Create Account</a>
+        </div>
+
+    </div>
+</div>
+
+<div class="footer">
+    Made with 💜 for Maths Lovers | Formula Buddy
+</div>
+
+<script>
+
+let currentForm = "login";
+
+/* Form Switching */
+
+function switchForm(type){
+
+    const card = document.querySelector(".card");
+
+    card.classList.remove("switching");
+    void card.offsetWidth;
+    card.classList.add("switching");
+
+    currentForm = type;
+
+    const signup = type === "signup";
+
+    document.getElementById("title").textContent =
+        signup ? "Join Formula Buddy! 🎉" : "Welcome Back! 👋";
+
+    document.getElementById("subtitle").textContent =
+        signup ? "Create your account & start learning"
+              : "Let's continue your learning journey";
+
+    document.getElementById("nameBox").style.display =
+        signup ? "block" : "none";
+
+    document.getElementById("confirmBox").style.display =
+        signup ? "block" : "none";
+
+    document.getElementById("loginOptions").style.display =
+        signup ? "none" : "flex";
+
+    document.getElementById("name").required = signup;
+    document.getElementById("confirmPassword").required = signup;
+
+    document.getElementById("submitBtn").textContent =
+        signup ? "Create My Account 💜" : "Login & Continue 🚀";
+
+    document.getElementById("loginTab").classList.toggle(
+        "active",!signup);
+
+    document.getElementById("signupTab").classList.toggle(
+        "active",signup);
+
+    document.getElementById("bottomText").textContent =
+        signup ? "Already have an account?"
+               : "New to Formula Buddy?";
+
+    document.getElementById("bottomLink").textContent =
+        signup ? "Login" : "Create Account";
+
+    document.getElementById("bottomLink").onclick = function(e){
+        e.preventDefault();
+        switchForm(signup ? "login" : "signup");
+    };
+
+    document.getElementById("message").textContent = "";
+}
+
+/* Show Hide Password */
+
+function togglePassword(id,button){
+
+    const input = document.getElementById(id);
+
+    if(input.type === "password"){
+        input.type = "text";
+        button.textContent = "🙈";
+    }else{
+        input.type = "password";
+        button.textContent = "👁️";
+    }
+}
+
+/* Forgot Password */
+
+function forgotPassword(e){
+    e.preventDefault();
+    alert("Please contact admin to reset your password 💜");
+}
+
+/* Signup & Login Demo */
+
+document.getElementById("authForm").addEventListener(
+"submit",function(e){
+
+    e.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if(currentForm === "signup"){
+
+        const name = document.getElementById("name").value;
+        const confirm = document.getElementById("confirmPassword").value;
+
+        if(password !== confirm){
+            alert("Oops! Passwords don't match 💔");
+            return;
+        }
+
+        if(localStorage.getItem(email)){
+            alert("Account already exists!");
+            return;
+        }
+
+        // Demo only - not secure authentication
+        localStorage.setItem(email,JSON.stringify({
+            name:name,
+            password:password
+        }));
+
+        celebrate();
+
+        alert("Yay! Account created successfully 🎉");
+
+        switchForm("login");
+
+    }else{
+
+        const user = localStorage.getItem(email);
+
+        if(!user){
+            alert("Account not found! Please Sign Up 💜");
+            return;
+        }
+
+        const data = JSON.parse(user);
+
+        if(data.password !== password){
+            alert("Wrong password! Try again 😊");
+            return;
+        }
+
+        document.getElementById("message").textContent =
+            "Welcome "+data.name+"! Login Successful 🎉";
+
+        celebrate();
+
+        // Dashboard redirect:
+        // window.location.href = "dashboard.html";
+    }
+});
+
+/* Bottom Link */
+
+document.getElementById("bottomLink").onclick = function(e){
+    e.preventDefault();
+    switchForm(currentForm === "login" ? "signup" : "login");
+};
+
+/* Mouse Sparkles */
+
+document.addEventListener("mousemove",function(e){
+
+    if(Math.random() > .92){
+
+        const particle = document.createElement("div");
+
+        particle.className = "particle";
+        particle.textContent = "✨";
+
+        particle.style.left = e.clientX+"px";
+        particle.style.top = e.clientY+"px";
+
+        particle.style.setProperty("--x",
+            (Math.random()*80-40)+"px");
+
+        particle.style.setProperty("--y",
+            (-Math.random()*100)+"px");
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>particle.remove(),1500);
+    }
+});
+
+/* Mascot Click */
+
+document.querySelector(".mascot").addEventListener("click",function(){
+
+    this.style.transform="scale(1.3) rotate(10deg)";
+
+    celebrate();
+
+    setTimeout(()=>{
+        this.style.transform="";
+    },400);
+});
+
+/* Celebration Animation */
+
+function celebrate(){
+
+    const emojis=["💜","✨","🎉","⭐","💖","🌸"];
+
+    for(let i=0;i<35;i++){
+
+        const particle=document.createElement("div");
+
+        particle.className="particle";
+
+        particle.textContent=
+            emojis[Math.floor(Math.random()*emojis.length)];
+
+        particle.style.left=Math.random()*100+"vw";
+        particle.style.top=Math.random()*80+"vh";
+
+        particle.style.setProperty("--x",
+            (Math.random()*400-200)+"px");
+
+        particle.style.setProperty("--y",
+            (Math.random()*400-200)+"px");
+
+        document.body.appendChild(particle);
+
+        setTimeout(()=>particle.remove(),1600);
+    }
+}
+
+</script>
+
+</body>
+</html>

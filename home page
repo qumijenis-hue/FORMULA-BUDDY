@@ -1,0 +1,792 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formula Buddy 💜</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg,#f8eaff,#eee0ff,#ffe4f3);
+    color: #593078;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Floating background */
+
+.bubble {
+    position: fixed;
+    width: 18px;
+    height: 18px;
+    background: #e9b9ff;
+    border-radius: 50%;
+    opacity: .45;
+    animation: float 7s infinite ease-in-out;
+    z-index: -1;
+}
+
+@keyframes float {
+    0%,100% {transform: translateY(0);}
+    50% {transform: translateY(-60px);}
+}
+
+/* Navbar */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 7%;
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 5px 20px #d8b5ed55;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    color: #9b50c7;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 22px;
+}
+
+nav ul li {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+nav ul li:hover {
+    color: #ed69b7;
+    transform: translateY(-3px);
+}
+
+button {
+    border: none;
+    padding: 12px 23px;
+    border-radius: 25px;
+    background: linear-gradient(45deg,#b65bdf,#ed83c5);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 5px 15px #c78de5;
+}
+
+button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 22px #bb75db;
+}
+
+/* Pages */
+
+.page {
+    display: none;
+    padding: 55px 8%;
+    min-height: 85vh;
+    animation: appear .6s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes appear {
+    from {opacity:0; transform:translateY(20px);}
+    to {opacity:1; transform:translateY(0);}
+}
+
+/* Home */
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 35px;
+    min-height: 65vh;
+}
+
+.hero h1 {
+    font-size: clamp(35px,5vw,55px);
+    line-height: 1.3;
+}
+
+.hero h1 span {
+    color: #d45ca9;
+}
+
+.hero p {
+    margin: 20px 0;
+    line-height: 1.8;
+    color: #80618f;
+}
+
+.hero-art {
+    font-size: 150px;
+    animation: bounce 3s infinite;
+    filter: drop-shadow(0 10px 15px #d79be5);
+}
+
+@keyframes bounce {
+    0%,100% {transform: translateY(0) rotate(-5deg);}
+    50% {transform: translateY(-20px) rotate(5deg);}
+}
+
+/* Cards */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 25px;
+    margin-top: 35px;
+}
+
+.card {
+    background: rgba(255,255,255,.8);
+    padding: 28px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px #c99edc55;
+    text-align: center;
+    transition: .4s;
+    border: 2px solid #fff;
+}
+
+.card:hover {
+    transform: translateY(-10px) rotate(1deg);
+    box-shadow: 0 15px 30px #bd86d855;
+}
+
+.card .emoji {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 13px;
+    color: #896d9b;
+    margin-bottom: 15px;
+}
+
+/* Section headings */
+
+.heading {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subheading {
+    text-align: center;
+    color: #9876a6;
+    margin-bottom: 30px;
+}
+
+/* Login */
+
+.login-box {
+    max-width: 420px;
+    margin: 20px auto;
+    padding: 35px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 10px 35px #c18bd655;
+    text-align: center;
+}
+
+input, select {
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    border: 2px solid #ead4f5;
+    border-radius: 15px;
+    outline: none;
+    font-family: inherit;
+}
+
+input:focus {
+    border-color: #bd6edc;
+}
+
+/* Formula visualizer */
+
+.formula-box {
+    background: white;
+    max-width: 650px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px #cda3e655;
+}
+
+.formula {
+    font-size: 30px;
+    font-weight: 700;
+    color: #bd56c9;
+    padding: 25px;
+    background: #fbebff;
+    border-radius: 18px;
+    margin: 20px 0;
+}
+
+.explanation {
+    line-height: 2;
+    color: #856594;
+}
+
+/* Flashcards */
+
+.flashcard {
+    max-width: 450px;
+    height: 250px;
+    margin: 30px auto;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.flash-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .7s;
+}
+
+.flashcard.flipped .flash-inner {
+    transform: rotateY(180deg);
+}
+
+.flash-front, .flash-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background: linear-gradient(135deg,#d9a7ff,#f6b6e2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px #bb82d855;
+}
+
+.flash-front h2, .flash-back h2 {
+    font-size: 25px;
+}
+
+.flash-back {
+    background: linear-gradient(135deg,#a978e8,#e58ac9);
+    transform: rotateY(180deg);
+}
+
+/* Progress */
+
+.progress {
+    height: 15px;
+    background: #ead4f5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#a855d4,#ed82c4);
+    transition: 1s;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #a17bb2;
+}
+
+/* Mobile */
+
+@media(max-width:750px) {
+    nav {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    nav ul {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-art {
+        font-size: 100px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bubble" style="top:15%;left:8%"></div>
+<div class="bubble" style="top:45%;left:90%"></div>
+<div class="bubble" style="top:80%;left:20%"></div>
+<div class="bubble" style="top:70%;left:75%"></div>
+
+<nav>
+    <div class="logo">💜 Formula Buddy</div>
+
+    <ul>
+        <li onclick="showPage('home')">Home</li>
+        <li onclick="showPage('visualizer')">Visualizer</li>
+        <li onclick="showPage('flashcards')">Flashcards</li>
+        <li onclick="showPage('dashboard')">Progress</li>
+        <li onclick="showPage('login')">Login</li>
+    </ul>
+</nav>
+
+<!-- HOME PAGE -->
+
+<section id="home" class="page active">
+
+<div class="hero">
+    <div>
+        <h1>Make Maths<br>
+        <span>Easy & Magical!</span> ✨</h1>
+
+        <p>
+        Welcome to Formula Buddy! 💜<br>
+        Learn, visualize, remember and master<br>
+        your favourite mathematics formulas.
+        </p>
+
+        <button onclick="showPage('visualizer')">
+            Start Learning ✨
+        </button>
+
+        <button onclick="showPage('login')">
+            Join Now 💗
+        </button>
+    </div>
+
+    <div class="hero-art">📚💜</div>
+</div>
+
+<h2 class="heading">Explore Your Learning Space 🌸</h2>
+
+<div class="cards">
+
+    <div class="card">
+        <div class="emoji">🧮</div>
+        <h3>Formula Visualizer</h3>
+        <p>Understand formulas with simple explanations.</p>
+        <button onclick="showPage('visualizer')">Explore</button>
+    </div>
+
+    <div class="card">
+        <div class="emoji">🎴</div>
+        <h3>Smart Flashcards</h3>
+        <p>Practice formulas and improve your memory.</p>
+        <button onclick="showPage('flashcards')">Practice</button>
+    </div>
+
+    <div class="card">
+        <div class="emoji">📊</div>
+        <h3>My Progress</h3>
+        <p>Track your learning journey.</p>
+        <button onclick="showPage('dashboard')">View Progress</button>
+    </div>
+
+    <div class="card">
+        <div class="emoji">⭐</div>
+        <h3>Formula of the Day</h3>
+        <p id="dailyFormula">Today's special formula!</p>
+        <button onclick="showPage('visualizer')">Learn More</button>
+    </div>
+
+</div>
+</section>
+
+<!-- LOGIN PAGE -->
+
+<section id="login" class="page">
+
+<div class="login-box">
+    <div style="font-size:55px">💜</div>
+    <h2>Welcome Back!</h2>
+    <p>Login to your Formula Buddy account</p>
+
+    <input type="text" id="username" placeholder="Enter your name">
+    <input type="email" id="email" placeholder="Enter your email">
+    <input type="password" id="password" placeholder="Enter password">
+
+    <button onclick="loginUser()">Login / Sign Up</button>
+
+    <p id="loginMessage" style="margin-top:15px"></p>
+</div>
+
+</section>
+
+<!-- VISUALIZER PAGE -->
+
+<section id="visualizer" class="page">
+
+<h1 class="heading">🧮 Formula Visualizer</h1>
+<p class="subheading">Understand mathematics, one formula at a time!</p>
+
+<div class="formula-box">
+
+    <select id="formulaSelect" onchange="changeFormula()">
+        <option value="area">Area of Circle</option>
+        <option value="square">Area of Square</option>
+        <option value="rectangle">Area of Rectangle</option>
+        <option value="triangle">Area of Triangle</option>
+        <option value="speed">Speed Formula</option>
+        <option value="pythagoras">Pythagoras Theorem</option>
+    </select>
+
+    <h2 id="formulaTitle">Area of Circle</h2>
+
+    <div class="formula" id="formulaDisplay">
+        A = πr²
+    </div>
+
+    <p class="explanation" id="formulaExplanation">
+        Area of a circle is calculated by multiplying
+        π with the square of its radius.
+    </p>
+
+    <div style="margin-top:20px">
+        <input type="number" id="radius" placeholder="Enter radius" value="5">
+        <button onclick="calculateFormula()">Calculate ✨</button>
+    </div>
+
+    <h3 id="result" style="margin-top:20px;color:#d45ca9"></h3>
+
+    <div id="visualDrawing" style="font-size:65px;margin-top:15px">
+        🔵
+    </div>
+
+</div>
+
+</section>
+
+<!-- FLASHCARD PAGE -->
+
+<section id="flashcards" class="page">
+
+<h1 class="heading">🎴 Formula Flashcards</h1>
+<p class="subheading">Flip the card and test your memory!</p>
+
+<div class="flashcard" onclick="flipCard()">
+    <div class="flash-inner">
+
+        <div class="flash-front">
+            <h2 id="question">What is the area of a circle?</h2>
+            <p>Tap to reveal answer 💗</p>
+        </div>
+
+        <div class="flash-back">
+            <h2 id="answer">A = πr²</h2>
+            <p>Great job! Keep learning ✨</p>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align:center">
+    <button onclick="previousCard()">⬅ Previous</button>
+    <button onclick="nextCard()">Next ➡</button>
+</div>
+
+<p id="cardCount" style="text-align:center;margin-top:20px"></p>
+
+</section>
+
+<!-- DASHBOARD PAGE -->
+
+<section id="dashboard" class="page">
+
+<h1 class="heading">📊 My Learning Dashboard</h1>
+<p class="subheading">Every formula learned is a step towards success!</p>
+
+<div class="cards">
+
+    <div class="card">
+        <div class="emoji">🎴</div>
+        <h2 id="cardsLearned">0</h2>
+        <p>Flashcards Viewed</p>
+    </div>
+
+    <div class="card">
+        <div class="emoji">🧮</div>
+        <h2 id="calculations">0</h2>
+        <p>Calculations Completed</p>
+    </div>
+
+    <div class="card">
+        <div class="emoji">⭐</div>
+        <h2 id="userDisplay">Student</h2>
+        <p>Welcome Learner</p>
+    </div>
+
+</div>
+
+<div class="formula-box" style="margin-top:35px">
+    <h2>Learning Progress 🌸</h2>
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <h3 id="progressText">0% Completed</h3>
+</div>
+
+</section>
+
+<footer>
+    Made with 💜 for Mathematics Lovers | Formula Buddy 2026
+</footer>
+
+<script>
+
+/* Page navigation */
+
+function showPage(page) {
+    document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+    });
+
+    document.getElementById(page).classList.add('active');
+
+    if(page === 'dashboard') updateDashboard();
+
+    window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Login - demo only */
+
+function loginUser() {
+
+    let name = document.getElementById('username').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let password = document.getElementById('password').value;
+
+    if(!name || !email || !password) {
+        alert("Please fill all fields 💗");
+        return;
+    }
+
+    localStorage.setItem('studentName',name);
+
+    document.getElementById('loginMessage').innerHTML =
+        "Welcome " + name + "! 🎉 Login successful.";
+
+    document.getElementById('userDisplay').innerText = name;
+}
+
+/* Formula database */
+
+const formulas = {
+
+    area: {
+        title:"Area of Circle",
+        formula:"A = πr²",
+        explanation:"Multiply π (3.14159) by the radius squared.",
+        emoji:"🔵"
+    },
+
+    square: {
+        title:"Area of Square",
+        formula:"A = side²",
+        explanation:"Multiply the side length by itself.",
+        emoji:"🟪"
+    },
+
+    rectangle: {
+        title:"Area of Rectangle",
+        formula:"A = length × breadth",
+        explanation:"Multiply the length by the breadth.",
+        emoji:"🟫"
+    },
+
+    triangle: {
+        title:"Area of Triangle",
+        formula:"A = ½ × base × height",
+        explanation:"Multiply the base by height and divide by 2.",
+        emoji:"🔺"
+    },
+
+    speed: {
+        title:"Speed",
+        formula:"Speed = Distance / Time",
+        explanation:"Divide the total distance travelled by the time taken.",
+        emoji:"🚗"
+    },
+
+    pythagoras: {
+        title:"Pythagoras Theorem",
+        formula:"a² + b² = c²",
+        explanation:"For a right triangle, the sum of the squares of the two shorter sides equals the square of the hypotenuse.",
+        emoji:"📐"
+    }
+
+};
+
+function changeFormula() {
+
+    let key = document.getElementById('formulaSelect').value;
+    let f = formulas[key];
+
+    document.getElementById('formulaTitle').innerText = f.title;
+    document.getElementById('formulaDisplay').innerText = f.formula;
+    document.getElementById('formulaExplanation').innerText = f.explanation;
+    document.getElementById('visualDrawing').innerText = f.emoji;
+    document.getElementById('result').innerText = "";
+    document.getElementById('radius').placeholder = "Enter required value";
+}
+
+/* Formula calculator */
+
+let calculationCount = Number(localStorage.getItem('calculations')) || 0;
+
+function calculateFormula() {
+
+    let key = document.getElementById('formulaSelect').value;
+    let x = Number(document.getElementById('radius').value);
+
+    if(!Number.isFinite(x) || x <= 0) {
+        alert("Enter a valid positive number!");
+        return;
+    }
+
+    let result = 0;
+
+    if(key === 'area') result = Math.PI*x*x;
+    if(key === 'square') result = x*x;
+    if(key === 'rectangle') result = x*x;
+    if(key === 'triangle') result = 0.5*x*x;
+    if(key === 'speed') result = x/2;
+    if(key === 'pythagoras') result = Math.sqrt(2*x*x);
+
+    document.getElementById('result').innerText =
+        "Your Answer = " + result.toFixed(2) + " ✨";
+
+    calculationCount++;
+    localStorage.setItem('calculations',calculationCount);
+
+    updateDashboard();
+}
+
+/* Flashcards */
+
+const cards = [
+    ["What is the area of a circle?","A = πr²"],
+    ["What is the area of a square?","A = side²"],
+    ["What is the area of a rectangle?","A = length × breadth"],
+    ["What is the area of a triangle?","A = ½ × base × height"],
+    ["What is the formula for speed?","Speed = Distance / Time"],
+    ["State Pythagoras theorem.","a² + b² = c²"]
+];
+
+let currentCard = 0;
+let viewed = Number(localStorage.getItem('viewed')) || 0;
+
+function displayCard() {
+
+    document.getElementById('question').innerText = cards[currentCard][0];
+    document.getElementById('answer').innerText = cards[currentCard][1];
+    document.getElementById('cardCount').innerText =
+        "Card " + (currentCard+1) + " of " + cards.length;
+
+    document.querySelector('.flashcard').classList.remove('flipped');
+
+    updateDashboard();
+}
+
+function flipCard() {
+    document.querySelector('.flashcard').classList.toggle('flipped');
+
+    if(!document.querySelector('.flashcard').classList.contains('flipped')) return;
+
+    viewed++;
+    localStorage.setItem('viewed',viewed);
+    updateDashboard();
+}
+
+function nextCard() {
+    currentCard = (currentCard+1)%cards.length;
+    displayCard();
+}
+
+function previousCard() {
+    currentCard = (currentCard-1+cards.length)%cards.length;
+    displayCard();
+}
+
+/* Dashboard */
+
+function updateDashboard() {
+
+    document.getElementById('cardsLearned').innerText = viewed;
+    document.getElementById('calculations').innerText = calculationCount;
+
+    let percentage = Math.min(100,Math.round(
+        (new Set(JSON.parse(localStorage.getItem('completedCards') || '[]')).size
+        / cards.length)*100
+    ));
+
+    document.getElementById('progressBar').style.width = percentage + "%";
+    document.getElementById('progressText').innerText = percentage + "% Completed";
+
+    document.getElementById('userDisplay').innerText =
+        localStorage.getItem('studentName') || "Student";
+}
+
+/* Daily formula */
+
+const today = new Date().getDate();
+const daily = cards[today % cards.length];
+
+document.getElementById('dailyFormula').innerText = daily[1];
+
+/* Restore login name */
+
+document.getElementById('userDisplay').innerText =
+    localStorage.getItem('studentName') || "Student";
+
+displayCard();
+
+</script>
+
+</body>
+</html>

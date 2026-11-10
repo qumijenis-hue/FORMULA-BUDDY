@@ -14,7 +14,9 @@
     <div class="logo">Formula Buddy 💜</div>
     <div>
       <a href="index.html">Home</a>
-      <a href="formulas.html">Formulas</a>
+      <a href="Formula_of_the_day.html">Formula of the Day</a>
+       <a href="Revise_calender.html">Revise Calender</a>
+
       <a href="visualizer.html" class="active">Visualizer</a>
     </div>
   </nav>
